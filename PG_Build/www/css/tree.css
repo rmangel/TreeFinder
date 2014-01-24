@@ -1,0 +1,46 @@
+#title 
+{
+	text-align: center;
+	font-size: 20px;
+}
+html
+{
+	height: 100%;
+}
+body	
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color:#009650;
+	background-position:center center;
+	background-size:100% 100%; 
+}
+#map_canvas
+{
+	min-width: 200px;
+	min-height: 515px;
+	height: 100%;
+	width: 100%;	
+}
+#h_Img 
+{
+	float: left;
+}
+#h_H1 {
+	float: left;
+}
+.center-button
+{
+	margin: 0 auto;	
+}
+.ui-body-a, .ui-body-a input, .ui-body-a select, .ui-body-a textarea, .ui-body-a button{
+	font-size:18px;
+	text-align:center;
+}
+#homeBack
+{
+	background: url('../images/bigtree.png') repeat-y fixed center;    
+	height:100%;
+}
+

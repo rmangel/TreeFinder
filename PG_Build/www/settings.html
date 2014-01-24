@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html> 
+    <head> 
+        <meta charset="utf-8" /> 
+        <title>Settings</title>
+        <link rel="stylesheet" href="css/treeTheme.min.css" />
+        <link rel="stylesheet" href="jquery_mobile/jquery.mobile.structure-1.2.0.min.css" /> 	
+        <link rel="stylesheet" type="text/css" href="css/tree.css"/>
+        <script src="jquery/jquery-1.8.2.min.js"></script>
+        <script src="jquery_mobile/jquery.mobile-1.2.0.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/cordova-2.2.0.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script> 
+    </head> 
+	<body> 	
+		<div data-role="page" id="settings" data-theme="a" data-title="Settings Page">
+			<div data-role="header" >                
+				<h1>Settings</h1>
+                
+			</div>					
+			<div data-role="content" style="text-align:left">
+                <!--<label for="measurement">Measurement (Kilometers/Miles):</label>
+					<select name="measurement" id="measurement" data-role="slider">
+						<option value="mi">Mi</option>
+						<option value="km">Km</option>
+					</select> 
+					<br />	-->		 
+               	<label for="slider-1">Display Trees within (mi):</label>
+                <input type="range" name="slider1" id="slider1" min="1" max="380" data-highlight="true"/>
+                <br />
+                <br />
+                <hr />
+                <label for="slider-1">Maximum poll interval (sec):</label>
+                <input type="range" name="slider2" id="slider2" min="1" max="30" data-highlight="true"/>
+            </div>
+            <div data-role="footer" data-position="fixed">		
+				<div data-role="navbar" data-position="fixed">
+					<ul>
+						<li><a id="doneBtn" href="map.html" rel="external" data-transition="slidefade" data-icon="check" onclick="saveSettings()">Done</a></li>					
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+        </div>		
+	</body>
+	
+</html>

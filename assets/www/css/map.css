@@ -1,0 +1,8 @@
+.page-map, .ui-content, #map-canvas 
+{ 
+	width:99%; 
+	height: 90%; 
+	padding: 0; 
+	}
+#map-canvas { height: min-height: 90%; }
+
