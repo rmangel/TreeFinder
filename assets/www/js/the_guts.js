@@ -16,9 +16,9 @@ function onDeviceReady()
 //
 function populateDB(tx) {
      tx.executeSql('DROP TABLE IF EXISTS TREES');
-     tx.executeSql('CREATE TABLE IF NOT EXISTS TREES (id unique, BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank)');            
-     tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank) VALUES (1, "Malus species", "Common Apple", 35, 41, 36, 159.9, 39.864014, -105.070195, "1T")');//,"NW Corner of 92nd & Pierce"
-    /* tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (2, "Prunus mandshurica", "Apricot", 36, 40, 33, 161.29, 40.013252, -105.283393, "1T","9th st. & Arapahoe")');
+     tx.executeSql('CREATE TABLE IF NOT EXISTS TREES (id unique, BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes)');            
+     tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (1, "Malus species", "Common Apple", 35, 41, 36, 159.9, 39.864014, -105.070195, "1T", "NW Corner of 92nd & Pierce")');
+     tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (2, "Prunus mandshurica", "Apricot", 36, 40, 33, 161.29, 40.013252, -105.283393, "1T","9th st. & Arapahoe")');
      tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (3, "Prunus mandshurica", "Apricot", 39, 25, 43, 158.21, 38.442094, -105.011455, "1T", "425 I street")');
      tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (4, "Fagus sylvatica", "Cutleaf European Beech", 3.20, 17, 10, 29.55, 39.788291, -105.032752, "1", "Regis/SW corner of Science Bldg")');
      tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (5, "Fagus sylvatica", "European Weeping Beech", 5.7, 16, 16, 37.90, 39.788291, -105.032752, "2", "Regis/NW corner of Carroll Hall")');
@@ -60,7 +60,8 @@ function populateDB(tx) {
      tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (41, "Gleditsia tricanthos", "Thorned Honeylocust", 45.10, 84, 68, 242.61, 39.736486, -10496457, "1", "NE corner")');
      tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (42, "Gleditsia tricanthos inermis", "Thornless Honeylocust Pincushion", 10.5, 43, 23, 81.72, 39.731993, -104.960117, "1", "Denver Botanic Gardens/ Picnic Garden")');
      tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (43, "Ostrya virginiana", "American Hophornbeam", 8, 42, 22, 72.62, 39.731993, -104.960177, "1", "Denver Botanic Gardens/Waring House")');
-     tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (44, "Carpinus caroliniana", "American Hornbeam", 5.10, 32, 31, 55.76, 39.731993, -104.960117, "1", "Denver Botanic Gardens/Waring House")');*/
+     tx.executeSql('INSERT INTO TREES (id,BotName, ComName, DBH, Height, CrownSpread, Points, latitude, longitude, rank, notes) VALUES (44, "Carpinus caroliniana", "American Hornbeam", 5.10, 32, 31, 55.76, 39.731993, -104.960117, "1", "Denver Botanic Gardens/Waring House")');
+     
 }
 
 //creates the database if this is the first run of the app
@@ -138,10 +139,17 @@ function draw_map(res)
     {
         loc_string = currentLocation.longitude + ", " + currentLocation.latitude;
         
+         $('#map_canvas').gmap('addMarker', {
+        	'id':'myPos',
+        	'position':loc_string,
+        	'icon' : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+    	});
         var yourStartLatLng = new google.maps.LatLng(currentLocation.longitude, currentLocation.latitude);
         $.mobile.loading( 'hide');
         $('#map_canvas').gmap({'zoom':8, 'center': loc_string});
+        //alert("Made It past map");
         plot_points(res);
+        //alert("made it past plot");
         
     }
     else
@@ -152,6 +160,7 @@ function draw_map(res)
         alert("Sorry Treefinder cannot function without your Current Location, turn on your gps and try again");
     }
 }
+
 
 function plot_points(res)
 {
@@ -165,11 +174,11 @@ function plot_points(res)
     for (var j=0; j<len; j++){
         $marker.location = res.rows.item(j).latitude+","+res.rows.item(j).longitude; //put lat + long in a comma delimited string 
         $marker.content =  '<div style="padding: 0px; text-align:left; font-size:11px;" align="left">'
-                            +'<p><b>Name:   </b>'+res.rows.item(j).ComName+'</p></br><p><b>Bot. Name:   </b>'
-                            +res.rows.item(j).BotName + '</p></br><p><b> DBH:   </b>'+ res.rows.item(j).DBH
-                            +'</p></br><p><b> Height:   </b>'+ res.rows.item(j).Height +'</p></br><p><b> Crown Spread:   </b>'
-                            + res.rows.item(j).CrownSpread +'</p></br><p><b> Points:   </b>'+ res.rows.item(j).Points
-                            +'</p></br><p><b> Rank:   </b>'+ res.rows.item(j).rank +'</p></br><p><b> Notes:   </b>'+ res.rows.item(j).notes +'</p></div>';
+                            +'<p><b>Name:   </b>'+res.rows.item(j).ComName+'</p><p><b>Bot. Name:   </b>'
+                            +res.rows.item(j).BotName + '</p><p><b> DBH:   </b>'+ res.rows.item(j).DBH
+                            +'</p><p><b> Height:   </b>'+ res.rows.item(j).Height +'</p><p><b> Crown Spread:   </b>'
+                            + res.rows.item(j).CrownSpread +'</p><p><b> Points:   </b>'+ res.rows.item(j).Points
+                            +'</p><p><b> Rank:   </b>'+ res.rows.item(j).rank +'</p><p><b> Notes:   </b>'+ res.rows.item(j).notes +'</p></div>';
         arr[j]=[
                 $marker.content
                 ];   
